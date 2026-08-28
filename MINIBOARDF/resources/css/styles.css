@@ -1,0 +1,30 @@
+#principalLogin {
+        background-image: url("../img/fondo.jpg");
+        background-size: cover;
+}
+
+
+#loginForm input {
+
+        box-shadow: none;
+
+        &:hover {
+                box-shadow: 0 0 0 1px cyan;
+                border-color: cyan !important;
+        }
+
+        &:focus {
+                box-shadow: 0 0 0 3px cyan;
+                border-color: cyan !important;
+        }
+}
+
+#ChangueMode{
+        color: blue;
+        cursor: pointer;
+        width:fit-content;
+        justify-self: flex-end;
+        
+        &:active{color: red;
+        }
+}

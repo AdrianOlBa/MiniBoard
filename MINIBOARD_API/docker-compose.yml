@@ -1,0 +1,27 @@
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: postgres_d
+    environment:
+      POSTGRES_USER: Adrian
+      POSTGRES_PASSWORD: contrasenya
+      POSTGRES_DB: MINIBOARD
+      TZ: Europe/Madrid
+    ports:
+      - "5432:5432" 
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./miniboard.sql:/docker-entrypoint-initdb.d/postgresinit.sql
+
+  backend:
+    build:
+      context: .
+    container_name: miniboard_api_d
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+
+volumes:
+  db_data:
