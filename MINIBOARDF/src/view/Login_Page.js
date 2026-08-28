@@ -2,7 +2,7 @@
  * @typedef {Object} Login_return
  * @property {HTMLElement} root - Formulario dibujado
  * @property {Function} update - Actualizar la vista del formulario
- * @property {Function} Formdata - Extraer datos del formulario
+ * @property {Function} Form_data - Extraer datos del formulario 
  */
 
 
@@ -18,10 +18,10 @@
 export function Login_Page(props) {
   const root = document.createElement('div');
 
-  root.className = 'd-flex vh-100 vw-100 align-items-center justify-content-center';
+  root.className = 'row h-100 d-flex align-items-center justify-content-center';
   root.id = "principalLogin";
   root.innerHTML = `
-    <div class="row w-100 justify-content-center">
+    <div class="d-flex justify-content-center">
       <div class="col-12 col-sm-10 col-md-10 col-lg-6">
 
         <div class="card shadow-sm">
