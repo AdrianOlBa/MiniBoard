@@ -1,18 +1,181 @@
-
 <!doctype html>
-<html lang="es">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>MiniBoard</title>
-		<link rel="stylesheet" href="./resources/css/styles.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-		<script type="module" src="./src/app.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-	</head>
-	<body>
-		<div id="app" class="container-fluid vh-100">
+<html lang="es" data-bs-theme="dark">
 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>MiniBoard</title>
+	<link rel="stylesheet" href="./resources/css/styles.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script type="module" src="./src/app.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div id="app" class="container-fluid vh-100">
+		<div class="row flex-column flex-lg-row h-100">
+			<div class="Header-App d-flex flex-lg-column col-12 col-lg-2 p-0">
+
+				<div class="icono Home d-none d-lg-flex">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+						class="bi bi-house" viewBox="0 0 16 16">
+						<path
+							d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+					</svg>
+				</div>
+
+				<div class="icono Favorito d-none d-lg-flex">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+						class="bi bi-star-fill" viewBox="0 0 16 16">
+						<path
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+					</svg>
+				</div>
+
+				<div class="icono logout-button mt-auto d-none d-lg-flex">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+						class="bi bi-door-closed" viewBox="0 0 16 16">
+						<path
+							d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3zm1 13h8V2H4z" />
+						<path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0" />
+					</svg>
+				</div>
+
+				<div class="icono icono-menu ms-auto d-flex d-lg-none " data-bs-toggle="offcanvas"
+					data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+						class="bi bi-list" viewBox="0 0 16 16">
+						<path fill-rule="evenodd"
+							d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+					</svg>
+				</div>
+
+				<div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasResponsive"
+					aria-labelledby="offcanvasResponsiveLabel">
+					<div class="offcanvas-header">
+						<h5 class="offcanvas-title" id="offcanvasResponsiveLabel">MINIBOARD</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+							data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+					</div>
+					<div class="offcanvas-body d-lg-none p-0 mt-3">
+						<div class="list-group list-group-flush">
+
+
+							<a href="#Home" class="list-group-item list-group-item-action active" aria-current="true">
+								<div class="d-flex w-100">
+									<h5 class="mb-1">Home</h5>
+								</div>
+							</a>
+							<a href="#Home" class="list-group-item list-group-item-action " aria-current="true">
+								<div class="d-flex w-100">
+									<h5 class="mb-1">Favoritos</h5>
+								</div>
+							</a>
+							<a href="#Home" class="list-group-item list-group-item-action " aria-current="true">
+								<div class="d-flex w-100">
+									<h5 class="mb-1">Ajustes</h5>
+								</div>
+							</a>
+
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="Content-App col">
+				<div id="Cards-Grid" class="row flex-row h-100">
+					<div class="tarjeta col-6 col-lg-4">
+						<div class="card-body tarjeta-int d-flex flex-column p-3">
+
+							<div class="d-flex flex-row">
+								<div class="titulo-diagrama fs-2 align-content-center">
+									Titulo
+								</div>
+
+								<div class="material-symbols-outlined  ms-auto icono-favorito" ${color_a}>
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+										class="bi bi-star-fill" viewBox="0 0 16 16">
+										<path
+											d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+									</svg>
+								</div>
+
+								<div class="material-symbols-outlined ms-3 icono-eliminar">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+										class="bi bi-trash2-fill" viewBox="0 0 16 16">
+										<path
+											d="M2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z" />
+									</svg>
+								</div>
+							</div>
+
+
+							<div class="d-flex justify-content-end mt-3">
+								<div class="etiqueta-rol fs-6">
+									Espectador
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="tarjeta col-6 col-lg-4">
+						<div class="card-body tarjeta-int d-flex flex-column p-3">
+
+							<div class="d-flex flex-row">
+								<div class="titulo-diagrama fs-2 align-content-center">
+									Titulo
+								</div>
+
+								<div class="material-symbols-outlined  ms-auto icono-favorito" ${color_a}>
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+										class="bi bi-star-fill" viewBox="0 0 16 16">
+										<path
+											d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+									</svg>
+								</div>
+
+								<div class="material-symbols-outlined ms-3 icono-eliminar">
+									<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+										class="bi bi-trash2-fill" viewBox="0 0 16 16">
+										<path
+											d="M2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z" />
+									</svg>
+								</div>
+							</div>
+
+
+							<div class="d-flex justify-content-end mt-3">
+								<div class="etiqueta-rol fs-6">
+									Espectador
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+
+				<div id="agregar-Btn">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-plus-lg" viewBox="0 0 16 16">
+						<path fill-rule="evenodd"
+							d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+					</svg>
+				</div>
+			</div>
 		</div>
-	</body>
+	</div>
+</body>
+
 </html>

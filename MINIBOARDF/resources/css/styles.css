@@ -19,12 +19,155 @@
         }
 }
 
-#ChangueMode{
+#ChangueMode {
         color: blue;
         cursor: pointer;
-        width:fit-content;
+        width: fit-content;
         justify-self: flex-end;
-        
-        &:active{color: red;
+
+        &:active {
+                color: red;
         }
+}
+
+
+
+
+
+.Header-App {
+        height: 10%;
+        background-color: var(--bs-secondary-bg);
+}
+
+.Content-App {
+        padding-top: 70px;
+        background-color: var(--bs-bg);
+}
+
+
+.icono {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 70px;
+
+        &:hover {
+                background-color: var(--bs-tertiary-bg);
+        }
+}
+
+.icono-menu {
+        width: 60px;
+
+}
+
+
+.tarjeta {
+
+        min-height: 130px;
+        height: 160px;
+        padding: 15px;
+}
+
+.tarjeta .card-body {
+        background-color: var(--bs-body-tertiary-bg);
+        height: 100%;
+        border: 1px solid var(--bs-border-color);
+        border-top: 4px solid var(--color-principal) !important;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+
+        &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+}
+
+.titulo-diagrama {
+        font-size: 16px;
+        font-weight: 600;
+}
+
+.etiqueta-rol {
+        border: 1px solid #ccc;
+        padding: 5px 8px;
+
+}
+
+.icono-favorito,
+.icono-eliminar {
+        cursor: pointer;
+        font-size: 32px;
+}
+
+#Cards-Grid {
+        overflow-x: scroll;
+        scrollbar-width: none;
+}
+
+
+/* Contenedor principal del botón */
+#agregar-Btn {
+        position: fixed;
+        z-index: 0;
+        width: 64px;
+        height: 64px;
+        bottom: 1.3rem;
+        right: 1.3rem;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--bs-secondary-bg);
+        border: 1px solid var(--bs-border-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: all 0.05s ease-in;
+
+
+        &:hover {
+                transform: scale(1.1);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                background-color: var(--bs-tertiary-bg);
+        }
+
+        &:active {
+                transform: scale(0.95);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+        }
+}
+
+
+
+
+@media (min-width: 992px) {
+        .Header-App {
+                width: 70px !important;
+                height: 100% !important;
+        }
+
+        .Content-App {
+                height: 100%;
+        }
+
+
+}
+
+
+@media (max-width: 992px) {
+        .Header-App {
+                height: 70px;
+        }
+
+
+        .Content-App {
+                padding: 0px;
+                min-height: 90%;
+        }
+
+
 }
