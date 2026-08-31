@@ -27,17 +27,22 @@ export class BuildLogin {
    * Procesa el envío del formulario según el estado actual del login
    */
   onSubmit = async () => {
-
+    let respuesta
     let datos = (this.view.Form_data());
 
     switch (this.estado) {
       case "Register":
-        let resp_serv = await this.model.Registrar(datos)
+        respuesta = await this.model.Registrar(datos)
         console.log(resp_serv)
         break
       case "Login":
-        let resp_ser = await this.model.Login(datos)
-        console.log(resp_ser)
+        respuesta = await this.model.Login(datos)
+        console.log(respuesta.error)
+        if (respuesta.error) {
+          this.view.error(respuesta.error)
+        }
+
+        console.log(respuesta)
         break
     }
   }
@@ -50,9 +55,7 @@ export class BuildLogin {
    */
   render(container) {
     this.container = container;
-
-    this.container.innerHTML = '';
-    this.container.appendChild(this.view.root);
+    this.view.render(container)
   }
 
 

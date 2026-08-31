@@ -25,10 +25,17 @@ export function Login_Page(props) {
       <div class="col-12 col-sm-10 col-md-10 col-lg-6">
 
         <div class="card shadow-sm">
-          <div class="card-body p-4">
+          <div id="Form-container" class="card-body p-4">
             <h1 class="card-title text-center mb-4">Iniciar Sesión</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
-            <form id="loginForm">
+  const Formulario = document.createElement("form")
+  Formulario.id = "loginForm"
+  Formulario.innerHTML = `
               <div id="FormBody">   
                 <div class="mb-3">
                   <label for="correo" class="form-label">Correo electrónico</label>
@@ -40,10 +47,11 @@ export function Login_Page(props) {
                   <input type="password" id="password" class="form-control" required autocomplete="current-password">
                 </div>
               </div>
+
+
               <div id="ChangueMode" class="cambiar-modo d-flex justify-content-end px-3"> No tienes cuenta? Registrate </div>
 
               <div id="errorMsg" class="alert alert-danger d-none mb-3" role="alert"></div>
-              
               
               
               <div  class="d-flex justify-content-center mt-4">
@@ -51,19 +59,13 @@ export function Login_Page(props) {
                   Ingresar
                 </button>
               </div>
-
-
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
+`
+  root.querySelector('#Form-container').appendChild(Formulario)
+  const ErrorMsg = Formulario.querySelector('#errorMsg')
 
   //Event Listener con logica delegada al controlador
-  root.querySelector('#ChangueMode').addEventListener('click', props.onChangue);
-  root.querySelector('#loginForm').addEventListener('submit', (e) => { e.preventDefault();  props.onSubmit(e); });
+  Formulario.querySelector('#ChangueMode').addEventListener('click', props.onChangue);
+  Formulario.addEventListener('submit', (e) => { e.preventDefault(); props.onSubmit(e); });
 
 
 
@@ -84,7 +86,7 @@ export function Login_Page(props) {
       type = "Register";
     }
 
-   
+
     return { correo, password, nombre, type }
   }
 
@@ -95,11 +97,11 @@ export function Login_Page(props) {
    * @param {String} state estado actual del formulario
    */
   const update = (state) => {
-    let Form = root.querySelector('#loginForm');
     let FormBody = root.querySelector('#FormBody');
     let titulo = root.querySelector('.card-title');
     let mensaje = root.querySelector('#ChangueMode');
-
+    Formulario.reset()
+    ErrorMsg.classList.add("d-none")
     switch (state.estado) {
       case "Login":
         let nameInput = document.createElement('div');
@@ -119,9 +121,29 @@ export function Login_Page(props) {
         mensaje.innerHTML = "No tienes cuenta? Registrate";
         break;
     };
+
+
   };
 
-  return { root, update, Form_data };
+
+  const render = (container) => {
+    container.innerHTML = '';
+    container.appendChild(root)
+  }
+
+  const error = (errorMSG) => {
+    console.log(errorMSG)
+    ErrorMsg.classList.remove("d-none")
+    ErrorMsg.textContent = errorMSG;
+  }
+
+  const Registered = () => {
+    Formulario.reset()
+    update("Register")
+  }
+
+
+  return { root, update, Form_data, render, Registered, error };
 }
 
 
