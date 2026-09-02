@@ -67,7 +67,7 @@
 .tarjeta {
 
         min-height: 130px;
-        height: 160px;
+        height: 180px;
         padding: 15px;
 }
 
@@ -165,8 +165,14 @@
 
 
         .Content-App {
-                padding: 0px;
+                padding: 30px;
                 min-height: 90%;
+        }
+
+        .logout-button {
+                width: 80px;
+                align-self: flex-end;
+
         }
 
 

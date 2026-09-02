@@ -16,12 +16,12 @@ function Generar_jwt(payload) {
 /**
  * Evaluar la validez de un JWT
  * @param {*} token 
- * @returns {Object} validez del token y datos del usuario si es que el token es valido
+ * @returns {Object} datos del usuario si es que el token es valido , validez del token 
  */
 function Evaluar_jwt(token) {
-    let validez =  jwt.verify(token, secret);
+    jwt.verify(token, secret);
     let datos = jwt.decode(token, { complete: true });
-    return ({datos,validez})
+    return ({ datos })
 }
 
-module.exports = {Generar_jwt,Evaluar_jwt}
+module.exports = { Generar_jwt, Evaluar_jwt }

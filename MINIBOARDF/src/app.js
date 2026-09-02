@@ -1,19 +1,18 @@
-import { BuildHome } from "./controller/BuildHome.js";
-import { BuildLogin } from "./controller/BuildLogin.js";
+import { Builder } from "./controller/app.js";
 
 //inicializar la aplicacion
-function app(){
-const AppRoot=document.getElementById('app');
-const root=new BuildLogin(AppRoot);
-root.render(AppRoot);
+function app() {
+    const AppRoot = document.getElementById('app');
+    const App = Builder()
+    App.AppBuildLogin(AppRoot)
 }
 
 //let x = document.getElementById("Cards-Grid")
 
 //new Sortable(x, {
-    //animation: 150,
-    //ghostClass: 'blue-background-class',
-    //draggable: ".tarjeta",
+//animation: 150,
+//ghostClass: 'blue-background-class',
+//draggable: ".tarjeta",
 //});
 
 app()

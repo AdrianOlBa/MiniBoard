@@ -12,6 +12,7 @@ const ErrorHandler = require('./middlewares/ErrorHandler');
 const Auth = require('./middlewares/Auth');
 //routes
 const LoginRouter = require('./modules/Login/Login_Routes');
+const UserRouter = require('./modules/Usuario/User_Router');
 
 //////////////////////////////
 
@@ -23,6 +24,8 @@ app.use(cors())
 
 app.use('/Auth',LoginRouter);
 
+app.use(Auth)
+app.use('/User',UserRouter)
 //app.use();
 
 
