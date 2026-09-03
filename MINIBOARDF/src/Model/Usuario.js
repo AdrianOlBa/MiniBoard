@@ -4,8 +4,10 @@
 export class Usuario {
     /**Modo actual del usuario*/
     mode = "Login";
-    /**Datos del usuario*/
     usuario = "";
+    constructor(token) {
+        this.token = token
+    }
 
 
     /**
@@ -27,6 +29,18 @@ export class Usuario {
         let resp_serv = await (await fetch('http://localhost:3000/Auth/Login', { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos) })).json();
         return resp_serv
     }
+
+    async Get_Diagramas() {
+        let Boards = await (await fetch('http://localhost:3000/User/Boards', { method: "GET", headers: { 'Content-Type': 'application/json', token: this.token } })).json();
+        return Boards;
+    }
+
+
+    async Get_Diagramas_Favoritos() {
+        let Boards = await (await fetch('http://localhost:3000/User/Favorites', { method: "GET", headers: { 'Content-Type': 'application/json', token: this.token } })).json();
+        return Boards;
+    }
+
 
     /**
      * Cierra la sesión actual del usuario.

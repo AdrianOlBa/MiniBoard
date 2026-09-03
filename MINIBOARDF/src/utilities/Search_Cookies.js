@@ -3,7 +3,7 @@
  * @param {string} cookie 
  * @returns {String}
  */
-export function buscar_cookie(cookie) {
+export function Search_Cookie(cookie) {
     let dumb_dictionary = {}
     for (let i of document.cookie.split("; ")) {
         let [index, valor] = i.split("=")

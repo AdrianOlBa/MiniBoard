@@ -3,14 +3,14 @@ import { Cards_Home } from "./Components_Home/Cards-Home.js";
 import { Icons_Home } from "./Components_Home/Icons-Home.js";
 import { Off_Menu_home } from "./Components_Home/Off-Menu-Home.js";
 
-export function Home_Page() {
+export function Home_Page(props) {
     const root = document.createElement("div");
     const Header = document.createElement("div")
     const Body = document.createElement("div")
     let OffMenu = Off_Menu_home();
     let iconos = Icons_Home();
-    let tarjeta_p = Cards_Home();
-    let Add = Add_Button_Home();
+    let Boards = Cards_Home();
+    let Add = Add_Button_Home({onAdd: props.onAdd});
 
 
     //Contendor
@@ -28,17 +28,25 @@ export function Home_Page() {
 
     OffMenu.render(Header)
 
-    tarjeta_p.render(Body)
+    Boards.render(Body)
+
     Add.render(Body)
+
+
+
+
+    Header.addEventListener("click", props.onBar)
+    Body.addEventListener("click", props.onBoard)
 
 
     root.appendChild(Header)
     root.appendChild(Body)
 
+
     const render = (container) => {
         container.innerHTML = '';
         container.appendChild(root)
-    }
+    }    
 
-    return { root, render }
+    return { root, render, load:Boards.load ,add:Boards.add,Delete:Boards.Delete,Favorite:Boards.Favorite}
 }

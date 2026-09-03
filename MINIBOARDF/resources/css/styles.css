@@ -42,6 +42,8 @@
 .Content-App {
         padding-top: 70px;
         background-color: var(--bs-bg);
+        overflow-y: scroll;
+        scrollbar-width: none;
 }
 
 

@@ -40,7 +40,7 @@ function initModels(sequelize) {
   mensaje.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});
   diagrama.hasMany(mensaje, { as: "mensajes", foreignKey: "did"});
  
-  participacion.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});
+  participacion.belongsTo(diagrama, {foreignKey: "did"});
   diagrama.hasMany(participacion, { as: "participacions", foreignKey: "did"});
  
   registro_invitaciones.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});

@@ -1,18 +1,17 @@
 import { Builder } from "./controller/app.js";
+import { Search_Cookie } from "./utilities/Search_Cookies.js";
 
 //inicializar la aplicacion
 function app() {
     const AppRoot = document.getElementById('app');
     const App = Builder()
-    App.AppBuildLogin(AppRoot)
+    let token = Search_Cookie("token")
+    if (token) {
+        App.AppBuildHome(AppRoot)
+    } else {
+        App.AppBuildLogin(AppRoot)
+    }   
 }
 
-//let x = document.getElementById("Cards-Grid")
-
-//new Sortable(x, {
-//animation: 150,
-//ghostClass: 'blue-background-class',
-//draggable: ".tarjeta",
-//});
 
 app()

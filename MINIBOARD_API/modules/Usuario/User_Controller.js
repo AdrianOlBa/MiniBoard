@@ -13,7 +13,6 @@ async function User_Controller_Favorite(req, res, next) {
 async function User_Controller_Boards(req, res, next) {
   let usuario = req.user.payload
   let diagramas = await User_Service.User_Service_Get_Boards(usuario.uid)
-  console.log(diagramas)
   res.json(diagramas)
 }
 
@@ -35,12 +34,17 @@ async function User_Controller_Create(req, res, next) {
 async function User_Controller_Delete(req, res, next) {
   let usuario = req.user.payload
   let diagrama
+  console.log(req.body)
+  console.log(usuario)
   try {
     diagrama = await User_Service.User_Service_Delete_Board(req.body.did, usuario.uid)
   } catch (error) {
+
     return next(error.message)
   }
-  res.json(diagrama)
+  console.log("dbhjk sadbhjadsbjk ajk")
+
+  res.json(diagrama.message)
 }
 
 async function User_Controller_Change_Favorite(req, res, next) {
@@ -52,7 +56,7 @@ async function User_Controller_Change_Favorite(req, res, next) {
     return next(error.message)
   }
 
-  res.json(diagrama)
+  res.json(diagrama.message)
 }
 
 

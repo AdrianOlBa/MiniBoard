@@ -5,19 +5,19 @@ const participacion = sequelize.models.participacion;
 
 async function User_Service_Create_Board(dnombre, color, uid) {
     let nuevoDiagrama;
-        nuevoDiagrama = await diagrama.create({ dnombre, color });
-        let nuevo_registro = await participacion.create({ did: nuevoDiagrama.did, uid: uid, rnombre: "Administrador" });
-        nuevoDiagrama.setDataValue("Rol", nuevo_registro.rnombre);
+    nuevoDiagrama = await diagrama.create({ dnombre, color });
+    let nuevo_registro = await participacion.create({ did: nuevoDiagrama.did, uid: uid, rnombre: "Administrador" });
+    nuevoDiagrama.setDataValue("rnombre", nuevo_registro.rnombre);
 
     return { diagrama: nuevoDiagrama };
 }
 
 async function User_Service_Delete_Board(did, uid) {
     let usuario = await participacion.findOne({ where: { did: did, uid: uid } });
-    console.log(usuario)
+
 
     if (!usuario) {
-        throw new Error("Usuario no encontrado" );
+        throw new Error("Usuario no encontrado");
     }
 
     if (usuario.rnombre === "Administrador") {
@@ -32,18 +32,22 @@ async function User_Service_Delete_Board(did, uid) {
         throw new Error("No tienes permisos para eliminar este diagrama");
     }
 
-
+    return { message: "Diagrama eliminado correctamente" };
 }
 
 async function User_Service_Get_Boards(uid) {
-    let Boards = await participacion.findAll({ where: { uid: uid } })
+    let Boards = await participacion.findAll({ where: { uid: uid }, include: diagrama })
+
     console.log(Boards)
+
     return Boards;
 }
 
 async function User_Service_Favorite_Board(uid) {
-    let Boards = await participacion.findAll({ where: { uid: uid, es_favorito: true } })
+    let Boards = await participacion.findAll({ where: { uid: uid, es_favorito: true }, include: diagrama })
+
     console.log(Boards)
+
     return Boards;
 }
 
@@ -52,12 +56,13 @@ async function User_Service_Change_Favorite(uid, did) {
     if (!board) {
         throw new Error("Tablero no encontrado");
     }
+
     //no importa el rol del usuario, puede cambiar el estado de favorito
     board.es_favorito = !board.es_favorito;
 
     await board.save();
-
+    return { message: "Estado de favorito cambiado correctamente"};
 }
 
 
-module.exports = { User_Service_Create_Board, User_Service_Delete_Board, User_Service_Get_Boards, User_Service_Favorite_Board ,User_Service_Change_Favorite};
+module.exports = { User_Service_Create_Board, User_Service_Delete_Board, User_Service_Get_Boards, User_Service_Favorite_Board, User_Service_Change_Favorite };

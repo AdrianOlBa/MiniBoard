@@ -1,5 +1,5 @@
 
-export function Add_Button_Home() {
+export function Add_Button_Home(props) {
     const boton = document.createElement("div");
     const modal = document.createElement("div");
     const FormAdd = document.createElement("form")
@@ -24,9 +24,12 @@ export function Add_Button_Home() {
 
     //datos del formulario
     FormAdd.className = "p-4";
-    FormAdd.innerHTML += `<div class="mb-3">
-							<input type="text" class="form-control" id="nombreInput" name="nombre" placeholder="Nombre del diagrama">
-						</div>
+    FormAdd.innerHTML += `
+              <div class="mb-3">
+							 <input type="text" class="form-control" id="nombreInput" name="nombre" placeholder="Nombre del diagrama">
+				       <input type="text" class="form-control" id="colorInput" name="color" placeholder="Color del diagrama">
+              </div>
+            
                         <button type="submit" class="btn btn-primary w-100">
 							Crear Diagrama
 						</button>`
@@ -54,9 +57,19 @@ export function Add_Button_Home() {
     modal.querySelector("#FormAddBody").appendChild(FormAdd);
 
 
+
+    FormAdd.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      let dnombre = document.getElementById("nombreInput").value
+      let color= document.getElementById("colorInput").value
+      props.onAdd({dnombre,color})
+    })
+
     const render= (container)=>{
       container.appendChild(boton)
       container.appendChild(modal)
     }
+
+
     return { boton, modal,render}
 }
