@@ -1,19 +1,17 @@
 /**
- * @typedef {Object} Login_return
- * @property {HTMLElement} root - Formulario dibujado
- * @property {Function} update - Actualizar la vista del formulario
- * @property {Function} Form_data - Extraer datos del formulario 
- */
-
-
-
-/**
- * Crea la vista del formulario de Login, funciones de Inicio de sesion y registro.
+ * Crea la vista del formulario para Iniciar sesion o Registrarse
  * 
- * @param {Object} props Funciones delegadas por el controlador para el manejo de eventos.
- * @param {Function} props.onChangue acciones realizadas al cambiar el estado del form
- * @param {Function} props.onSubmit acciones realizadas al subir el form
- * @returns {Login_return}
+ * Conecta props a distintos eventos
+ *
+ * @param {Object} props Funciones controlador para manejar eventos.
+ * @returns {{
+ *   root: HTMLDivElement,
+ *   update: Function,
+ *   Form_data: Function,
+ *   render: Function,
+ *   Registered: Function,
+ *   error: Function
+ * }} Objeto con acceso a la vista y sus funciones 
  */
 export function Login_Page(props) {
   const root = document.createElement('div');
@@ -63,15 +61,16 @@ export function Login_Page(props) {
   root.querySelector('#Form-container').appendChild(Formulario)
   const ErrorMsg = Formulario.querySelector('#errorMsg')
 
-  //Event Listener con logica delegada al controlador
+  //Eventos manejados por props 
   Formulario.querySelector('#ChangueMode').addEventListener('click', props.onChangue);
   Formulario.addEventListener('submit', (e) => { e.preventDefault(); props.onSubmit(e); });
 
 
 
   /**
-   * Extraer datos del formulario Login/Register
-   * @returns {Object} Datos del formulario (correo, password, ?nombre)
+   * Recopila los valores actuales del formulario 
+   * @returns {{correo: string, password: string, nombre: string|boolean, type: string}}
+   *   Datos del formulario con el tipo de acción actual.
    */
   const Form_data = () => {
     let nombre = false;
@@ -93,8 +92,12 @@ export function Login_Page(props) {
 
 
   /**
-   * Alterar campos del formulario segun el estado actual (Login/Register)
-   * @param {String} state estado actual del formulario
+   * Actualiza la interfaz del formulario según el estado recibido.
+   *
+   * Cambia el título, el texto de cambio de modo y
+   * agrega o elimina el campo nombre
+   *
+   * @param {Object} state Estado actual del formulario.
    */
   const update = (state) => {
     let FormBody = root.querySelector('#FormBody');
@@ -126,17 +129,28 @@ export function Login_Page(props) {
   };
 
 
+  /**
+   * Carga la vista dentro del contenedor indicado.
+   * @param {HTMLElement} container Elemento raíz donde se montará la vista.
+   */
   const render = (container) => {
     container.innerHTML = '';
     container.appendChild(root)
   }
 
+  /**
+   * Muestra un mensaje de error en la pantalla del formulario.
+   * @param {string} errorMSG Texto de error.
+   */
   const error = (errorMSG) => {
     console.log(errorMSG)
     ErrorMsg.classList.remove("d-none")
     ErrorMsg.textContent = errorMSG;
   }
 
+  /**
+   * Resetea el formulario y lo deja preparado para el modo de Login
+   */
   const Registered = () => {
     Formulario.reset()
     update("Register")

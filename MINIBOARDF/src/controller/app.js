@@ -1,17 +1,36 @@
+import { BuildBoard } from "./BuildBoard.js";
 import { BuildHome } from "./BuildHome.js";
 import { BuildLogin } from "./BuildLogin.js";
-//el problema era que iba atner que crear un  builder de cambios para cambiar en cada controller , solucion : builder global con parametors que definen los cambios , el controller oslo los llama
-export function Builder() {
 
+const Board = new BuildBoard();
+const Home = new BuildHome();
+const Login = new BuildLogin();
+
+/**
+ * Encargado de manipular el estado global de la aplicacion (pagina) , basicamente que los controladores no se llamen entre ellos sin control
+ */
+export function Builder() {
+    /**
+     * Construye e inicializa el Login
+     * @param {HTMLElement} container 
+     */
     const AppBuildLogin = (container) => {
-        let page = new BuildLogin({ onLogin: () => { AppBuildHome(container) } })
-        page.render(container)
+        Login.render(container)
     }
 
     const AppBuildHome = (container) => {
-        let page = new BuildHome({ onBoard: () => { } , onLogout:()=>{}})
-        page.render(container)
+        Home.render(container)
     }
 
-    return { AppBuildHome, AppBuildLogin }
+    const AppBuildBoard = (Body) => {
+        Board.render(Body)
+    }
+
+    const Disconnect = () =>{
+        Board.onDisconnect()
+    }
+
+
+
+    return { AppBuildHome, AppBuildLogin, AppBuildBoard,Disconnect }
 }

@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @param {*} props 
+ * @returns 
+ */
 export function Add_Button_Home(props) {
     const boton = document.createElement("div");
     const modal = document.createElement("div");
