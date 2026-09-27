@@ -1,7 +1,8 @@
 /**
- * 
- * @param {*} props 
- * @returns 
+ * Crea la interfaz necesaria para agregar un nuevo tablero 
+ * Genera un botón flotante con un modal emergente y un formulario
+ * @param {Object} props - callbacks de eventos
+ * @returns {Object} {boton,modal.render}
  */
 export function Add_Button_Home(props) {
     const boton = document.createElement("div");
@@ -47,7 +48,7 @@ export function Add_Button_Home(props) {
 						<div class="modal-content">
 
 							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="FormModalTittle">Modal title</h1>
+								<h1 class="modal-title fs-5" id="FormModalTittle">Agregar Board</h1>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 

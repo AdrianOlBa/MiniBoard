@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('tarjeta', {
     tid: {
       autoIncrement: true,
@@ -15,9 +15,19 @@ module.exports = function(sequelize, DataTypes) {
         key: 'cid'
       }
     },
+    orden: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'orden'
+    },
     titulo: {
       type: DataTypes.STRING(200),
       allowNull: false
+    },
+    color: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      defaultValue: "gray"
     },
     contenido: {
       type: DataTypes.TEXT,

@@ -123,11 +123,44 @@
 
 }
 
+.blue-background-class {
+        order: unset;
+}
+
 .columna-kanban {
-        min-width: 280px !important;
+        min-width: 300px !important;
         height: 90%;
 
 }
+
+
+.col-form {
+        height: 50px;
+}
+
+.input-col-name {
+        width: 80% !important;
+}
+
+.input-col-color {
+        width: 15% !important;
+        height: 100%;
+}
+
+.tar-inputs {
+        height: 40px !important;
+}
+
+.input-tar-name {
+        width: 80% !important;
+        height: 100%;
+}
+
+.input-tar-color {
+        width: 15% !important;
+        height:40px
+}
+
 
 .header-col {
         height: 60px;
@@ -149,9 +182,10 @@
 }
 
 .agregar-Columna {
-        width: 280px;
+        min-width: 260px;
         height: 70px;
         cursor: pointer;
+        order: 999;
 
         &:active {
                 opacity: 0.7;

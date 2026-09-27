@@ -22,7 +22,7 @@ export class Usuario {
 
     /**
      * Inicia sesión y recibe un token de acceso
-     * @param {Object} datos - Datos para validae
+     * @param {Object} datos Datos para validae
      * @returns {Promise<Object>} Token de acceso o error
      */
     async Login(datos) {
@@ -31,6 +31,7 @@ export class Usuario {
     }
 
     async Get_Diagramas() {
+        console.log(this.token)
         let Boards = await (await fetch('http://localhost:3000/User/Boards', { method: "GET", headers: { 'Content-Type': 'application/json', token: this.token } })).json();
         return Boards;
     }

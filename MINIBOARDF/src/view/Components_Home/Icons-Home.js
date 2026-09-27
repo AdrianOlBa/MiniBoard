@@ -1,7 +1,7 @@
 /**
- * Iconos de la cabecera de Home
- * Aqui se definira la estructura y
- * @returns 
+ * Genera los iconos de cabecera
+ *
+ * @returns {Object} {iconos,render}
  */
 export function Icons_Home() {
 
@@ -13,7 +13,7 @@ export function Icons_Home() {
         Menu: { class: "icono icono-menu ms-auto d-flex d-lg-none ", id: "Menu_Header" }
     };
 
-    //Crear los elemntos para los iconos definidos y guardarlo dentro del mismo objeto
+ 
     for (let i in iconos) {
         let datos = iconos[i];
 

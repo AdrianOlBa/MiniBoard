@@ -1,3 +1,14 @@
+/**
+ * Genera la estructura HTML de una tarjeta individual para representar un diagrama/tablero en el panel principal.
+ * Asigna atributos identificadores, título, indicador de estado favorito (estrella) e ícono de eliminación.
+ *
+ * @param {string|number} did - id del board
+ * @param {string} titulo - nombre del board
+ * @param {boolean} Favorito - diagram favorito?
+ * @param {string} Rol - rol de usuario en el board
+ * @param {string} color - Color representativo 
+ * @returns {HTMLDivElement} contenedor de tarjeta
+ */
 function tarjeta_p(did, titulo, Favorito, Rol, color) {
 	let tarjeta = document.createElement("div");
 	tarjeta.className = 'tarjeta col-6 col-lg-4';
@@ -36,6 +47,13 @@ function tarjeta_p(did, titulo, Favorito, Rol, color) {
 	return tarjeta
 }
 
+
+
+/**
+ * Administra el contenedor principal y las tarjetas de diagramas
+ *
+ * @returns {Object} 
+ */
 export function Cards_Home() {
 	const root = document.createElement("div");
 	//Contendor

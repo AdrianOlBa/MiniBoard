@@ -12,7 +12,7 @@ export class BuildLogin {
     this.estado = "Login";
     this.view = Login_Page({ onChangue: this.onChangue, onSubmit: this.onSubmit });
     this.model = new Usuario();
-    this.changue = changue_page
+    this.Builder=Builder()
   }
 
   /** 
@@ -35,7 +35,7 @@ export class BuildLogin {
     switch (this.estado) {
       case "Register":
         respuesta = await this.model.Registrar(datos)
-
+         location.reload()
         break
       case "Login":
         respuesta = await this.model.Login(datos)
@@ -49,7 +49,7 @@ export class BuildLogin {
           save_cookie("token", respuesta.token)
           save_cookie("correo", respuesta.correo)
           //cambiar de pantalla
-          this.changue.onLogin();
+          this.Builder.AppBuildHome(this.container)
         }
 
         console.log(respuesta)

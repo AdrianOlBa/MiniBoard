@@ -14,7 +14,7 @@ export class BuildHome {
   constructor() {
     this.boards = []
     this.view = Home_Page({ onBoard: this.onBoard, onBar: this.onBar, onAdd: this.onAdd });
-    this.model = new Usuario(Search_Cookie("token"));
+    this.model = new Usuario();
     this.Board = new Board()
     this.Builder = Builder()
   }
@@ -26,6 +26,7 @@ export class BuildHome {
    * @param {HTMLElement} container 
    */
   async render(container) {
+    this.model.token=Search_Cookie("token")
     let boards = await this.model.Get_Diagramas()
     this.container = container;
     this.view.render(container);
@@ -56,7 +57,7 @@ export class BuildHome {
       this.view.Delete(tarjeta)
 
     } else if (tarjeta) {
-      this.Builder.AppBuildBoard(this.view.Body)
+      this.Builder.AppBuildBoard(this.view.Body, { did: tarjeta.dataset.did })
     }
 
   }
@@ -79,7 +80,7 @@ export class BuildHome {
       this.Builder.Disconnect()
       this.view.load(await this.model.Get_Diagramas_Favoritos())
     } else if (elemento.closest(".to_Logout")) {
-      this.Builder.Disconnect()
+      
       Logout()
       window.location.reload()
     }

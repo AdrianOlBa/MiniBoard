@@ -72,6 +72,8 @@ CREATE TABLE Participacion (
 CREATE TABLE Tarjeta (
     TID SERIAL PRIMARY KEY,
     CID INT NOT NULL,
+    Orden INT DEFAULT NULL,
+    Color VARCHAR(20) DEFAULT 'gray',
     Titulo VARCHAR(200) NOT NULL,
     Contenido TEXT DEFAULT '',
     CONSTRAINT fk_tarjeta_pertenece_a_columna FOREIGN KEY (CID) REFERENCES Columna(CID) ON DELETE CASCADE ON UPDATE CASCADE
@@ -82,3 +84,50 @@ INSERT INTO Rol (Rnombre, Mover, Escribir, Permisos_AD) VALUES
 ('Colaborador', TRUE, TRUE, FALSE),
 ('Administrador', TRUE, TRUE, TRUE);
 
+
+CREATE OR REPLACE FUNCTION incrementar_orden_columna()
+RETURNS TRIGGER AS $$
+DECLARE
+    max_orden INT;
+BEGIN
+    
+
+        SELECT COALESCE(MAX(Orden), 0) + 1
+        INTO max_orden
+        FROM Columna
+        WHERE DID = NEW.DID;
+
+        NEW.Orden := max_orden;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION incrementar_orden_tarjeta()
+RETURNS TRIGGER AS $$
+DECLARE
+    max_orden INT;
+BEGIN
+    SELECT COALESCE(MAX(Orden), 0) + 1
+    INTO max_orden
+    FROM Tarjeta
+    WHERE CID = NEW.CID;
+
+    NEW.Orden := max_orden;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+CREATE TRIGGER trg_autoincrement_orden_columna
+BEFORE INSERT ON Columna
+FOR EACH ROW
+EXECUTE FUNCTION incrementar_orden_columna();
+
+CREATE TRIGGER trg_autoincrement_orden_tarjeta
+BEFORE INSERT ON Tarjeta
+FOR EACH ROW
+EXECUTE FUNCTION incrementar_orden_tarjeta();

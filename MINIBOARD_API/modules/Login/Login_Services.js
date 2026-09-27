@@ -10,7 +10,7 @@ const saltRounds = 10;
  *  Registrar un uusario en la db a travez del modelo
  */
 async function Login_Service_Register(nombre, correo, password) {
-    password_h = await bcrypt.hash(password, saltRounds);
+    let password_h = await bcrypt.hash(password, saltRounds);
 
     try {
         const query = await usuarios.create({ nombre, correo, pass: password_h })
@@ -19,6 +19,7 @@ async function Login_Service_Register(nombre, correo, password) {
     }
     catch (err) {
         console.error(err.message);
+        console.log("error registro")
         return { err }
     }
 
@@ -47,7 +48,7 @@ async function Login_Service_Login(correo, password) {
         hash_pass = query.pass;
 
         let login = await bcrypt.compare(password, hash_pass);
-        
+        console.log(login)
         if (login) {
             return (query)
         } else {
@@ -62,6 +63,7 @@ async function Login_Service_Login(correo, password) {
 
 }
 
+//devuelve un token valido segun los datos de usuario
 function Generar_Sesion(uid, nombre, correo) {
     let token = jwt.Generar_jwt({ uid, nombre, correo })
     return token

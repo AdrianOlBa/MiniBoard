@@ -52,6 +52,7 @@ async function Login_Controller_Register(req, res, next) {
     next(respuesta.err);
     return;
   } else {
+    console.log("usuario registrado")
     res.json({ respuesta: "usuario insertado correctamente" })
   }
 

@@ -33,7 +33,7 @@ function initModels(sequelize) {
   
   
   tarjeta.belongsTo(columna, { as: "cid_columna", foreignKey: "cid"});
-  columna.hasMany(tarjeta, { as: "tarjeta", foreignKey: "cid"});
+  columna.hasMany(tarjeta, { foreignKey: "cid"});
   columna.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});
   diagrama.hasMany(columna, { as: "columnas", foreignKey: "did"});
  
@@ -49,7 +49,7 @@ function initModels(sequelize) {
   invitacion.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "iid"});
   invitacion.belongsTo(rol, { as: "rol_rol", foreignKey: "rol"});
   rol.hasMany(invitacion, { as: "invitacions", foreignKey: "rol"});
-  participacion.belongsTo(rol, { as: "rnombre_rol", foreignKey: "rnombre"});
+  participacion.belongsTo(rol, { foreignKey: "rnombre"});
   rol.hasMany(participacion, { as: "participacions", foreignKey: "rnombre"});
   participacion.belongsTo(usuarios, { as: "uid_usuario", foreignKey: "uid"});
   usuarios.hasMany(participacion, { as: "participacions", foreignKey: "uid"});

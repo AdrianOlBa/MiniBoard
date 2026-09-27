@@ -1,3 +1,8 @@
+/**
+ *Offcanvas colapsable y menu con logout
+
+ * @returns {Object} {root,render}
+ */
 export function Off_Menu_home() {
     //definicion menu
     let Menu = {

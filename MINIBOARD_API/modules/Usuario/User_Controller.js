@@ -2,7 +2,9 @@
 const User_Service = require('./User_Services');
 
 
-
+/**
+ * Retorna la lista de tableros marcados como favoritos por el usuario 
+ */
 async function User_Controller_Favorite(req, res, next) {
   let usuario = req.user.payload
   let diagramas = await User_Service.User_Service_Favorite_Board(usuario.uid)
@@ -10,12 +12,18 @@ async function User_Controller_Favorite(req, res, next) {
   res.json(diagramas)
 }
 
+/**
+ * Retorna la lista de tableros
+ */
 async function User_Controller_Boards(req, res, next) {
   let usuario = req.user.payload
   let diagramas = await User_Service.User_Service_Get_Boards(usuario.uid)
   res.json(diagramas)
 }
 
+/**
+ * Crea un nuevo tablero en la base de datos asignando al usuario actual como Administrador.
+ */
 async function User_Controller_Create(req, res, next) {
   let usuario = req.user.payload
   let diagrama
@@ -31,6 +39,11 @@ async function User_Controller_Create(req, res, next) {
   res.json(diagrama)
 }
 
+
+
+/**
+ * Elimina un tablero específico 
+ */
 async function User_Controller_Delete(req, res, next) {
   let usuario = req.user.payload
   let diagrama
@@ -47,6 +60,10 @@ async function User_Controller_Delete(req, res, next) {
   res.json(diagrama.message)
 }
 
+
+/**
+ * Alterna el estado de favorito del tablero indicado para el usuario
+ */
 async function User_Controller_Change_Favorite(req, res, next) {
   let usuario = req.user.payload
   let diagrama

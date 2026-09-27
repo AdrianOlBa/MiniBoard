@@ -1,3 +1,4 @@
+import { Search_Cookie } from "../utilities/Search_Cookies.js";
 import { BuildBoard } from "./BuildBoard.js";
 import { BuildHome } from "./BuildHome.js";
 import { BuildLogin } from "./BuildLogin.js";
@@ -19,11 +20,12 @@ export function Builder() {
     }
 
     const AppBuildHome = (container) => {
-        Home.render(container)
+        Home.render(container,Search_Cookie("token"))
     }
 
-    const AppBuildBoard = (Body) => {
-        Board.render(Body)
+    const AppBuildBoard = (Body,did) => {
+        console.log(did)
+        Board.render(Body,did)
     }
 
     const Disconnect = () =>{
