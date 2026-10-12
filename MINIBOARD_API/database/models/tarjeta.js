@@ -15,6 +15,14 @@ module.exports = function (sequelize, DataTypes) {
         key: 'cid'
       }
     },
+    creador: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'usuarios',
+        key: 'uid'
+      }
+    },
     orden: {
       type: DataTypes.INTEGER,
       allowNull: true,

@@ -2,7 +2,6 @@ import { Board_Page } from "../view/Board_Page.js";
 import { Socket_Board } from "../Model/Board.js";
 import { Search_Cookie } from "../utilities/Search_Cookies.js";
 import { BoardEvents } from "./BoardEvents.js";
-import { save_cookie } from "../utilities/Save_Cookie.js";
 
 /**
  * vista, el modelo de sockets y los eventos websockets del tablero
@@ -10,12 +9,19 @@ import { save_cookie } from "../utilities/Save_Cookie.js";
 export class BuildBoard {
 
 
-    constructor() {
-        this.view = Board_Page({ onCreateCol: this.onCreateCol, onCreateTar: this.onCreateTar, moverTarjeta: this.moverTarjeta, reorganizar: this.reorganizar, reorganizarC: this.reorganizarC, Contenido_tar: this.Contenido_tar, onEditT: this.onEditT, onUpdatetittle: this.onUpdatetittle, onDelete: this.onDelete });
-        this.events = new BoardEvents({ view: this.view })
+    constructor(home) {
+        this.view = Board_Page({
+            onCreateCol: this.onCreateCol, onCreateTar: this.onCreateTar,
+            moverTarjeta: this.moverTarjeta, reorganizar: this.reorganizar,
+            reorganizarC: this.reorganizarC, Contenido_tar: this.Contenido_tar,
+            onEditT: this.onEditT, onUpdatetittle: this.onUpdatetittle,
+            onDelete: this.onDelete, lista_usuarios: this.lista_usuarios,
+            onInvitacion:this.onInvitacion,eliminar_usuario:this.eliminar_usuario
+        });
+        this.events = new BoardEvents({ view: this.view,home})
 
-        this.model = new Socket_Board()//funcion modelo enviar solicitudes
-        //pasar callbacks de que sucedera
+        this.model = new Socket_Board()
+    
     }
 
     /**
@@ -41,7 +47,7 @@ export class BuildBoard {
      * Desconecta el socket del servidor y destruye los elementos de la vista.
      */
     onDisconnect = () => {
-        //mostrar un seguro que quieres desconectar... con this.view
+        //recordar:mostrar un seguro que quieres desconectar... con this.view
         this.model.desconectar()
         this.view.destroy()
     }
@@ -51,7 +57,6 @@ export class BuildBoard {
      * @param {Object} msg nuevo ordenamiento.
      */
     reorganizar = (msg) => {
-        //columna,datos
         console.log("reorganizar")
         console.log(msg)
         this.model.reorganizar(msg)
@@ -121,17 +126,57 @@ export class BuildBoard {
         }
     }
 
+
+    /**
+     * Obtiene la lista de usuarios del tablero.
+     * @param {Object} msg 
+     * @returns {Promise<Object>} Lista de usuarios.
+     */
+    lista_usuarios = async (msg) => {
+        let lista = await this.model.lista_usuarios(msg)
+        console.log(lista)
+        return lista
+    }
+
+    /**
+     * Invita a un usuario al tablero.
+     * muestra cualquier error recibido 
+     * @param {Object} msg Datos de la invitación.
+     * @returns {Promise<Object>} Resultado de la invitación.
+     */
+    onInvitacion = async (msg)=>{
+        let invitacion = await this.model.Invitar(msg)
+        if (invitacion.error){
+            this.view.error.showError(invitacion.error)
+        }
+        return invitacion
+    }
+
+    /**
+     * Elimina a un usuario del tablero.
+     * muestra cualquier error recibido
+     * @param {Object} msg Datos del usuario que se eliminará.
+     * @returns {Promise<Object>} Resultado de la eliminación.
+     */
+    eliminar_usuario = async (msg)=>{
+        let resultado = await this.model.eliminar_usuario(msg)
+        if (resultado.error){
+            this.view.error.showError(resultado.error)
+        }
+        return resultado
+    }
     /**
      * Conecta el socket, renderiza la interfaz y carga el tablero.
      * @param {HTMLElement} container - Elemento del DOM donde se insertará la vista.
-     * @param {string|number} did - ID del diagrama/tablero a cargar.
+     * @param {string} did - ID del diagrama/tablero a cargar.
      */
     render = async (container, did) => {
         console.log(did)
         this.did = did
         this.model.conectar(Search_Cookie("token"))
-        this.view.render(container, did)
         let board = await this.model.cargarDiagrama(did)
+        console.log(board)
+        this.view.render(container, did,board.Rol)
         this.view.build(board)
     }
 
@@ -143,4 +188,6 @@ export class BuildBoard {
         this.view.destroy()
     }
 
+
+    
 }

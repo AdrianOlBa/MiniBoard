@@ -1,6 +1,9 @@
 const jwt = require('../utilities/jwt.js');
 
-
+/**
+ * Decodifica el token JWT y agrega los datos del usuario a la solicitud request.
+ * Si el token es inválido o ha expirado, se pasa un error al siguiente middleware.
+ */
 const decoder = (req, res, next) => {
     const token = req.headers.token;
     console.log(token)

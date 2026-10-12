@@ -1,8 +1,9 @@
 import { Add_Button_Home } from "./Components_Home/Add-Button-Home.js";
 import { Cards_Home } from "./Components_Home/Cards-Home.js";
 import { Icons_Home } from "./Components_Home/Icons-Home.js";
+import { Invitaciones_Button_Home } from "./Components_Home/Invitaciones.js";
 import { Off_Menu_home } from "./Components_Home/Off-Menu-Home.js";
-
+import { Notification } from "./Components_Home/Notifications.js";
 
 /**
  * Construye la vista principal de la aplicación.
@@ -21,10 +22,14 @@ export function Home_Page(props) {
     const Header = document.createElement("div")
     const Body = document.createElement("div")
     const Content = document.createElement("div")
+    const notificacion = Notification()
+
+
     let OffMenu = Off_Menu_home();
     let iconos = Icons_Home();
     let Boards = Cards_Home();
     let Add = Add_Button_Home({ onAdd: props.onAdd });
+    let invitaciones = Invitaciones_Button_Home({ ...props, Badd: Boards.add })
 
 
     //Contendor
@@ -44,6 +49,8 @@ export function Home_Page(props) {
     iconos.render(Header)
 
     OffMenu.render(Header)
+    notificacion.render(root)
+
 
     root.appendChild(Header)
     root.appendChild(Body)
@@ -67,13 +74,16 @@ export function Home_Page(props) {
         Body.appendChild(Content)
         Boards.render(Content)
         Add.render(Content)
+        invitaciones.render(Content)
     }
- 
+
     /**
      * Carga el contenido si es que no esta el contendor del contenido lo agrega y carga
      * @param {*} boards 
      */
     const load_content = (boards) => {
+
+
         if (!Body.contains(Content)) {
             Body.innerHTML = ""
             Body.appendChild(Content)
@@ -81,7 +91,8 @@ export function Home_Page(props) {
         } else {
             Boards.load(boards)
         }
+
     }
 
-    return { root, Header, Body, render, load: load_content, add: Boards.add, Delete: Boards.Delete, Favorite: Boards.Favorite }
+    return { root, Header, Body, render, load: load_content, add: Boards.add, Delete: Boards.Delete, Favorite: Boards.Favorite, notificacion }
 }

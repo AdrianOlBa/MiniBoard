@@ -1,65 +1,82 @@
+:root {
+        --primary-color: #38bdf8;
+        --primary-hover: #006394;
+        --primary-rgb: 56, 189, 248;
+        --color-principal: var(--primary-color);
+
+        --bs-primary: var(--primary-color);
+        --bs-primary-rgb: var(--primary-rgb);
+}
+
+.btn-primary {
+        --bs-btn-bg: var(--primary-color);
+        --bs-btn-border-color: var(--primary-color);
+        --bs-btn-hover-bg: var(--primary-hover);
+        --bs-btn-hover-border-color: var(--primary-hover);
+        --bs-btn-color: #000000;
+}
+
+
+/**Formulario*/
+
 #principalLogin {
         background-image: url("../img/fondo.jpg");
         background-size: cover;
+        background-position: center;
 }
 
-
 #loginForm input {
-
         box-shadow: none;
 
         &:hover {
-                box-shadow: 0 0 0 1px cyan;
-                border-color: cyan !important;
+                box-shadow: 0 0 0 1px var(--primary-color);
+                border-color: var(--primary-color);
         }
 
         &:focus {
-                box-shadow: 0 0 0 3px cyan;
-                border-color: cyan !important;
+                box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.25);
+                border-color: var(--primary-color);
         }
 }
+
 
 #ChangueMode {
-        color: blue;
-        cursor: pointer;
-        width: fit-content;
-        justify-self: flex-end;
+  color: blue;
+  cursor: pointer;
+  width: fit-content;
+  justify-self: flex-end;
 
-        &:active {
-                color: red;
-        }
+  &:active {
+    color: red;
+  }
 }
 
 
-
-
+/**Layout principal*/
 
 .Header-App {
-        height: 10%;
-        background-color: var(--bs-secondary-bg);
+  height: 10%;
+  background-color: var(--bs-secondary-bg);
 }
-
 
 .Body-App {
-        overflow-y: scroll;
-        scrollbar-width: none;
-        padding-top: 70px;
-        background-color: var(--bs-bg);
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding-top: 70px;
+  background-color: var(--bs-bg); 
 }
-
 .icono {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70px;
 
-        &:hover {
-                background-color: var(--bs-tertiary-bg);
-        }
+  &:hover {
+    background-color: var(--bs-tertiary-bg);
+  }
 }
-
 .icono-menu {
         width: 60px;
 
@@ -67,48 +84,49 @@
 
 
 .tarjeta {
+  min-height: 130px;
+  height: 180px;
+  padding: 15px;
 
-        min-height: 130px;
-        height: 180px;
-        padding: 15px;
+  .card-body {
+    background-color: var(--bs-body-tertiary-bg);
+    height: 100%;
+    border: 1px solid var(--bs-border-color);
+    border-top: 4px solid var(--color-principal);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+  }
 }
 
-.tarjeta .card-body {
-        background-color: var(--bs-body-tertiary-bg);
-        height: 100%;
-        border: 1px solid var(--bs-border-color);
-        border-top: 4px solid var(--color-principal) !important;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        cursor: pointer;
 
-        &:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-}
+
+
 
 .titulo-diagrama {
-        font-size: 16px;
-        font-weight: 600;
+  font-size: 1rem; 
+  font-weight: 600;
 }
 
-
 .etiqueta-rol {
-        border: 1px solid #ccc;
-        padding: 5px 8px;
-
+  border: 1px solid #ccc;
+  padding: 5px 8px;
 }
 
 .icono-favorito,
 .icono-eliminar {
-        cursor: pointer;
-        font-size: 32px;
+  cursor: pointer;
+  font-size: 2rem; 
 }
 
 
-
+/**Board*/
 
 
 #kanban-Grid {
@@ -123,9 +141,6 @@
 
 }
 
-.blue-background-class {
-        order: unset;
-}
 
 .columna-kanban {
         min-width: 300px !important;
@@ -158,7 +173,7 @@
 
 .input-tar-color {
         width: 15% !important;
-        height:40px
+        height: 40px
 }
 
 
@@ -199,20 +214,13 @@
 
 
 
-
-
-
-
-
-
-
 #Cards-Grid {
         overflow-x: scroll;
         scrollbar-width: none;
 }
 
 
-/* Contenedor principal del botón */
+/* Botones flotantes fijos*/
 #agregar-Btn {
         position: fixed;
         z-index: 0;
@@ -243,7 +251,48 @@
         }
 }
 
+#invitaciones-Btn {
+        width: 64px;
+        height: 64px;
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--bs-secondary-bg);
+        border: 1px solid var(--bs-border-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: all 0.05s ease-in;
+
+
+        &:hover {
+                transform: scale(1.1);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                background-color: var(--bs-tertiary-bg);
+        }
+
+        &:active {
+                transform: scale(0.95);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+        }
+
+
+
+
+        bottom: 6rem;
+        right: 1.3rem;
+        z-index: 0;
+}
+
+
+.lista-usuarios {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 56px;
+        height: 56px;
+        z-index: 0
+}
 
 
 @media (min-width: 992px) {

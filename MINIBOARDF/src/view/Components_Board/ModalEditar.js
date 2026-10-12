@@ -43,13 +43,8 @@ export function Modal_Editar(props) {
 
     root.querySelector(".modal-body").appendChild(form);
 
-    // Convierte el valor de color del elemento a formato Hexadecimal para el input type="color"
-    const toHex = (color) => {
-        if (!color) return "#808080";
-        const ctx = document.createElement("canvas").getContext("2d");
-        ctx.fillStyle = color;
-        return ctx.fillStyle;
-    };
+    // Convierte el valor de color del elemento a formato Hexadecimal
+
 
     root.addEventListener('show.bs.modal', async (event) => {
         form.reset();
@@ -66,7 +61,7 @@ export function Modal_Editar(props) {
         const did = button.closest("#Board-Grid").dataset.did
 
         const titulo = tarjeta ? tarjeta.querySelector(".titulo-tarjeta-kanban")?.textContent.trim() : "";
-        const color = tarjeta ? tarjeta.style.backgroundColor : "";
+        const color = tarjeta.style.backgroundColor ;
 
         // Guardar IDs en el dataset del formulario
         form.dataset.cid = cid;
@@ -74,7 +69,7 @@ export function Modal_Editar(props) {
 
         // Asignación directa usando los IDs exactos del HTML
         form.querySelector('#NombreEditT').value = titulo;
-        form.querySelector('#colorEditT').value = toHex(color);
+        form.querySelector('#colorEditT').value = color
         form.querySelector('#messageEditT').value = (await props.Contenido_tar(tid)).contenido || "";
          console.log( (await props.Contenido_tar(tid)).contenido)
 
@@ -89,6 +84,9 @@ export function Modal_Editar(props) {
 
     });
 
+    /**
+     * obtener datos del formulario de edicion
+     */
     const GetFormData = () => {
         return {
             tid: form.dataset.tid,

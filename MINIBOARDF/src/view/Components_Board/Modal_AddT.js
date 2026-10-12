@@ -50,9 +50,13 @@ export function Modal_Add_Tarjeta(props) {
   root.querySelector(".modal-body").appendChild(form)
 
 
+  /**
+   * Prepara el formulario al abrir el modal.
+   * @param {Event} event 
+   * @returns {void}
+   */
   root.addEventListener('show.bs.modal', event => {
     form.reset()
-    // Button that triggered the modal
     const button = event.relatedTarget
     const cid = button.dataset.bsCid
     const columna = button.closest('.columna-kanban')
@@ -64,6 +68,7 @@ export function Modal_Add_Tarjeta(props) {
 
     modalTitle.textContent = `Agregar tarjeta a ` + titulo
   })
+
 
   form.addEventListener('submit',(e)=>{
     e.preventDefault();

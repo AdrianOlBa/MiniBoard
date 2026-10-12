@@ -1,6 +1,5 @@
 /**
  * Elemento modal con formulario para añadir una nueva columna al tablero.
- * 
  * @param {Object} props - callbacks para acciones en eventos
  * @returns {Object} `{ modal: HTMLElement, render: Function }`.
  */
@@ -17,7 +16,7 @@ export function Modal_Add_Column(props) {
 						<div class="modal-content">
 
 							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="FormModalTittle">Modal title</h1>
+								<h1 class="modal-title fs-5" id="FormModalTittle">Crear Columna</h1>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 
@@ -38,22 +37,26 @@ export function Modal_Add_Column(props) {
 
     modal.querySelector("#FormAddColumn").appendChild(Form)
 
-    Form.addEventListener("submit", (e) => { e.preventDefault(); props.onCreateCol(e, GetData()) })
+    Form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        props.onCreateCol(e, GetData())
+        
+    })
 
-    const render = (container) => {
-        container.innerHTML = `<div class="agregar-Columna bg-opacity-25 bg-dark-subtle rounded-2 d-flex flex-row align-items-center justify-content-center border border-secondary"  data-bs-toggle="modal" data-bs-target="#Modal-Add">
-							<p class="m-0 mx-3">Agregar Columna</p>
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-								<path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
-							</svg>
-					</div>`
+    const render = (container, rol) => {
+        container.innerHTML = `<div class="${(rol === "Espectador") && "d-none"}   agregar-Columna bg-opacity-25 bg-dark-subtle rounded-2 d-flex flex-row align-items-center justify-content-center border border-secondary"  data-bs-toggle="modal" data-bs-target="#Modal-Add">
+						     	<p class="m-0 mx-3">Agregar Columna</p>
+						        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
+						        </svg>
+				               </div>`
         container.appendChild(modal)
     }
 
 
     const GetData = () => {
-        const color = Form.querySelector('#color').value || 'plcholder';
-        const cnombre = Form.querySelector('#cnombre').value || 'plcholder';
+        const color = Form.querySelector('#color').value || 'placeholder';
+        const cnombre = Form.querySelector('#cnombre').value || 'placeholder';
 
         return { color, cnombre }
     }

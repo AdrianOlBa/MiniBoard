@@ -6,9 +6,8 @@
 export function Off_Menu_home() {
     //definicion menu
     let Menu = {
-        Home: { nombre: "Home", class: "to_Home list-group-item list-group-item-action active", id: "off-Home" },
-        Favoritos: { nombre: "Favorito", class: "to_Favorito list-group-item list-group-item-action", id: "off-Favorito" },
-        Ajustes: { nombre: "AJuste", class: "to_Ajustes list-group-item list-group-item-action", id: "off-Ajustes" }
+        Home: { nombre: "Boards", class: "to_Home list-group-item list-group-item-action active", id: "off-Home" },
+        Favoritos: { nombre: "Favoritos", class: "to_Favorito list-group-item list-group-item-action", id: "off-Favorito" }
     }
 
     //Definicion Logout y cuerpo general
@@ -53,7 +52,7 @@ export function Off_Menu_home() {
           <h5 class="mb-1">${Menu[titulo].nombre}</h5>
         </div>`;
         Lista.appendChild(elemento);
-        //ariant current true
+    
     }
 
     //agregar LOgout

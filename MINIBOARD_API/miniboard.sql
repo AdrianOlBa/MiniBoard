@@ -72,11 +72,13 @@ CREATE TABLE Participacion (
 CREATE TABLE Tarjeta (
     TID SERIAL PRIMARY KEY,
     CID INT NOT NULL,
+    Creador INT NOT NULL, 
     Orden INT DEFAULT NULL,
     Color VARCHAR(20) DEFAULT 'gray',
     Titulo VARCHAR(200) NOT NULL,
     Contenido TEXT DEFAULT '',
-    CONSTRAINT fk_tarjeta_pertenece_a_columna FOREIGN KEY (CID) REFERENCES Columna(CID) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_tarjeta_pertenece_a_columna FOREIGN KEY (CID) REFERENCES Columna(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_tarjeta_creador_usuario FOREIGN KEY (Creador) REFERENCES Usuarios(UID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO Rol (Rnombre, Mover, Escribir, Permisos_AD) VALUES

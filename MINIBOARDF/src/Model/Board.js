@@ -16,13 +16,13 @@ export function Board_events(props) {
 
     });
 
-    socket.on("expulsado", () => {
-        console.log("explusadooo")
-        location.reload()
+    socket.on("usuario_eliminado", () => {
+        props.onExpulsed()
     });
 
     socket.on("error", (msg) => {
         console.log(msg);
+        props.onError(msg)
     });
     //creacion
     socket.on("columna_creada", (msg) => { console.log(msg); props.onCreateCol(msg) });
@@ -37,7 +37,7 @@ export function Board_events(props) {
     socket.on("tarjeta_eliminada", (tid) => { console.log(tid); props.onDelete("tar", tid) })
 
     socket.on("titulo_col", (msg) => { console.log("titulo_col"); console.log(msg); props.tituloC(msg.cid, msg.titulo) })
-    socket.on("titulo_tar", (msg) => { console.log("titulo_tar"); console.log(msg); props.tituloT(msg.tid, msg.titulo) })
+    socket.on("tarjeta_editada", (msg) => { console.log("titulo_tar"); console.log(msg); props.Editar_Tarjeta(msg.tid, msg.titulo, msg.color) })
 
 
     socket.on("columnas_reorganizadas", (msg) => { console.log("colr"); props.reorganizar("col", msg.id) })
@@ -47,14 +47,24 @@ export function Board_events(props) {
 
 
 /**
- * Emisión de eventos e interacción vía Websockets
+ * Gestiona comunicación en tiempo real via WebSockets para el tablero.
  */
 export class Socket_Board {
 
+    /**
+     * 
+     * @param {Object} props callbacks del tablero.
+     * @returns {void}
+     */
     constructor(props) {
         this.props = props
     }
 
+    /**
+     * Conecta al usuario al servidor de WebSockets con un token 
+     * @param {string} token Token de autenticación del usuario.
+     * @returns {void}
+     */
     conectar(token) {
 
         socket.auth = { token };
@@ -62,10 +72,13 @@ export class Socket_Board {
     }
 
     /**
-    * Obtiene los datos completos de un tablero y guarda el rol
-    * @param {string} DID  ID del diagrama
-    * @returns {Promise<Object>} Datos del diagrama.
-    */
+     * Carga el diagrama del tablero y guarda el rol del usuario.
+     *
+     * Solicita la estructura del tablero al servidor y almacena el rol del usuario en cookies .
+     *
+     * @param {string} DID Identificador del diagrama o tablero.
+     * @returns {Promise<Object>} Datos del diagrama con su estado y rol.
+     */
     async cargarDiagrama(DID) {
         console.log(DID)
         let diagrama = await socket.emitWithAck('cargar_D', DID);
@@ -75,9 +88,10 @@ export class Socket_Board {
     }
 
     /**
-     * Obtiene el contenido de una tarjeta
-     * @param {string} tid - ID de la tarjeta.
-     * @returns {Promise<Object>} Contenido de la tarjeta.
+     * Obtiene el contenido de una tarjeta.
+     *
+     * @param {string} tid Identificador de la tarjeta.
+     * @returns {Promise<Object>} Contenido de la tarjeta solicitado.
      */
     async ContenidoTar(tid) {
         let contenido = await socket.emitWithAck('content_tar', { tid });
@@ -85,9 +99,11 @@ export class Socket_Board {
     }
 
     /**
-     * Modifica los datos de una tarjeta.
-     * @param {Object} data - nuevos datos de la tarjeta
-     * @returns {Promise<Object>} Confirmación 
+     * Edita los datos de una tarjeta.
+     * Envía la nueva información de la tarjeta al servidor y devuelve la respuesta de confirmación.
+     *
+     * @param {Object} data Nuevos datos de la tarjeta a actualizar.
+     * @returns {Promise<Object>} Respuesta del servidor con la confirmación de la edición.
      */
     async Editartar(data) {
         console.log(data)
@@ -98,20 +114,22 @@ export class Socket_Board {
 
     /**
      * Emite borrar una columna.
-     * @param {Object} msg -identificación de la columna.
+     * @param {Object} msg identificación de la columna.
      */
     async EliminarCol(msg) {
         socket.emit("eliminar_columna", msg)
     }
 
     /**
-     * Emite borrar una tarjeta.
-     * @param {Object} msg - identificación de la tarjeta.
+     * Emite eliminar una tarjeta.
+     * @param {Object} msg identificación de la tarjeta.
      */
     async EliminarTar(msg) {
         console.log(msg)
         socket.emit("eliminar_tarjeta", msg)
     }
+
+
 
     /**
     * Cierra la conexión del socket 
@@ -131,7 +149,6 @@ export class Socket_Board {
     */
     crearColumna(msg) {
         console.log(msg)
-        //agregar un callback de respuesta para mostrar al usuario que creo quq en fecto... creo
         socket.emit("create_C", msg)
     }
 
@@ -145,8 +162,8 @@ export class Socket_Board {
     }
 
     /**
-     * Envía el nuevo orden de elementos.
-     * @param {Object} msg - Posiciones o IDs actualizados.
+     * Envía el nuevo orden de las tarjetas al servidor.
+     * @param {Object} msg IDs y orden de las tarjetas reorganizadas.
      */
     reorganizar(msg) {
         console.log(msg)
@@ -177,6 +194,35 @@ export class Socket_Board {
         socket.emit("cambiar_col", msg)
     }
 
+    /**
+     * Obtiene la lista de usuarios del tablero.
+     * @param {Object} msg 
+     * @returns {Promise<Object>} Resultado con la lista de usuarios.
+     */
+    async lista_usuarios(msg) {
+        let lista = socket.emitWithAck("lista_usuarios", msg)
+        return lista;
+    }
+
+    /**
+     * Elimina a un usuario del tablero.
+     * @param {Object} msg ID del usuario
+     * @returns {Promise<Object>} respuesta
+     */
+    async eliminar_usuario(msg) {
+        let resultado = await socket.emitWithAck("eliminar_usuario", msg)
+        return resultado
+    }
+
+    /**
+     * Envía una invitación a un usuario.
+     * @param {Object} msg Datos de la invitación
+     * @returns {Promise<Object>} Respuesta invitación.
+     */
+    async Invitar(msg) {
+        let resultado = await socket.emitWithAck("enviar_invitacion", msg)
+        return resultado
+    }
 
 }
 

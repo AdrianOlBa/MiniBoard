@@ -1,8 +1,7 @@
 /**
- * Genera la estructura HTML de una tarjeta individual para representar un diagrama/tablero en el panel principal.
- * Asigna atributos identificadores, título, indicador de estado favorito (estrella) e ícono de eliminación.
+ * Genera la estructurade una tarjeta individual para un tablero en la home.
  *
- * @param {string|number} did - id del board
+ * @param {string} did - id del board
  * @param {string} titulo - nombre del board
  * @param {boolean} Favorito - diagram favorito?
  * @param {string} Rol - rol de usuario en el board
@@ -56,6 +55,9 @@ function tarjeta_p(did, titulo, Favorito, Rol, color) {
  */
 export function Cards_Home() {
 	const root = document.createElement("div");
+	const mensaje = document.createElement("div");
+	mensaje.className = "mensaje d-flex justify-content-center align-items-center w-100 h-100";
+	mensaje.innerHTML = `<h2 class="text-muted">No hay diagramas disponibles</h2>`;
 	//Contendor
 	root.className = 'row flex-row';
 	root.id = "Cards-Grid";
@@ -66,33 +68,66 @@ export function Cards_Home() {
 	});
 
 
+	/**
+	 * Limpia el contenedor y agrega tarjetas o muestra un mensaje.
+	 * @param {Array<Object>} boards - Tableros que se mostrarán.
+	 * @returns {void}
+	 */
 	const load = (boards) => {
 		root.innerHTML = '';
-		boards.forEach(board => {
-			add(board)
-		});
+		console.log(boards.length)
+		if (boards.length > 0) {
+			console.log("Cargando diagramas")
+			boards.forEach(board => {
+				add(board)
+			});
+		} else {
+			console.log("No hay diagramas disponibles")
+			root.appendChild(mensaje);
+		}
+
 	}
 
 
+	/**
+	 * Renderiza el componente sobre un contenedor
+	 * @param {HTMLElement} container contenedor
+	 */
 	const render = (container) => {
 		container.appendChild(root)
 	}
 
+	/**
+	 * Agrega una tarjeta de tablero a la vista.
+	 * @param {Object} board datos del tablero
+	 */
 	const add = (board) => {
-
+		if (root.querySelector(".mensaje")) {
+			root.removeChild(root.querySelector(".mensaje"))
+		}
 		root.appendChild(tarjeta_p(board.did, board.diagrama?.dnombre || board.dnombre, board.es_favorito, board.rnombre, board.diagrama?.color || board.color))
 	}
 
+	/**
+	 * Elimina una tarjeta de la vista.
+	 * @param {HTMLElement} tarjeta 
+	 */
 	const Delete = (tarjeta) => {
+
 		root.removeChild(tarjeta)
+
 	}
 
-    const Favorite = (tarjeta) => {
-		let icono_fav= tarjeta.querySelector(".favorite_star")
+	/**
+	 * Cambia el estado visual de favorito de una tarjeta.
+	 * @param {HTMLElement} tarjeta tarjeta
+	 */
+	const Favorite = (tarjeta) => {
+		let icono_fav = tarjeta.querySelector(".favorite_star")
 		let color = icono_fav.getAttribute("fill")
-		icono_fav.setAttribute("fill",color==="yellow"?"currentcolor":"yellow")
+		icono_fav.setAttribute("fill", color === "yellow" ? "currentcolor" : "yellow")
 	}
 
-	return { root, render, add, load , Delete ,Favorite}
+	return { root, render, add, load, Delete, Favorite }
 
 }

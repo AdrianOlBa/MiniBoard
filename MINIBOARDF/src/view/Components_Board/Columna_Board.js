@@ -23,40 +23,39 @@ export function Columna_Board(props, { cid, did, cnombre, color }, rol) {
     root.appendChild(Header)
     root.appendChild(Content)
 
+    if (rol === "Espectador") {
+        // En modo Espectador solo se renderiza el título deshabilitado (sin botón '+' ni menú '...')
+        Header.innerHTML = `<input class="titulo-Board fw-bold" value="${cnombre}" disabled readonly>`;
+    } else {
+        Header.innerHTML = `
+            <input class="titulo-Board fw-bold" value="${cnombre}">
+           
+            <div class="agregar-tarjeta mx-1" data-bs-toggle="modal" data-bs-target="#AddTarjetaModal" data-bs-cid="${cid}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                </svg>
+            </div>
+
+            <div class="ms-auto dropdown">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class=" bi bi-three-dots dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+               <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"></path>
+             </svg>
+
+             <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="eliminar-col dropdown-item text-danger" href="#">Eliminar columna</a></li>
+             </ul>
+            </div>`;
 
 
-    Header.innerHTML += `
-        <input class="titulo-Board fw-bold" value="${cnombre}">
-       
-       
-        <div class="agregar-tarjeta mx-1" data-bs-toggle="modal" data-bs-target="#AddTarjetaModal" data-bs-cid="${cid}">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-				<path fill-rule="evenodd"
-						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-			</svg>
-		</div>
+        root.querySelector(".titulo-Board").addEventListener('change', (e) => {
+            const titulo = e.target.value
+            props.onUpdatetittle({ titulo, cid })
 
+        });
 
-        <div class="ms-auto dropdown">
-         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class=" bi bi-three-dots dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
-		   <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"></path>
-		 </svg>
+    }
 
-		 <ul class="dropdown-menu dropdown-menu-dark">
-			<li class="dropdown-item"> Editar</li>
-			<li class="dropdown-item "> Mover a la izquierda</li>
-			<li>
-				<hr class="dropdown-divider">
-			</li>
-			<li><a class="eliminar-col dropdown-item text-danger" href="#">Eliminar columna</a></li>
-		 </ul>
-		</div>`
-
-    root.querySelector(".titulo-Board").addEventListener('change', (e) => {
-        const titulo = e.target.value
-        props.onUpdatetittle({ titulo, cid })
-
-    });
 
     sortable = new Sortable(Content, {
         group: "kanban",
@@ -64,6 +63,7 @@ export function Columna_Board(props, { cid, did, cnombre, color }, rol) {
         animation: 150,
         draggable: ".tarjeta-kanban",
         ghostClass: "ghost-tarjeta-kanban",
+        disabled: (rol === "Espectador"),
         onAdd: function (e) {
             console.log("modificar salida")
 
@@ -116,6 +116,7 @@ export function Columna_Board(props, { cid, did, cnombre, color }, rol) {
     }
 
     root.destroy = () => {
+        console.log("destroy")
         if (sortable) {
             sortable.destroy()
         }

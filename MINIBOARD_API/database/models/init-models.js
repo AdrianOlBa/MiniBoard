@@ -29,32 +29,40 @@ function initModels(sequelize) {
   diagrama.belongsToMany(usuarios, { as: 'uid_usuarios_registro_invitaciones', through: registro_invitaciones, foreignKey: "did", otherKey: "uid" });
   usuarios.belongsToMany(diagrama, { as: 'did_diagramas', through: participacion, foreignKey: "uid", otherKey: "did" });
   usuarios.belongsToMany(diagrama, { as: 'did_diagrama_registro_invitaciones', through: registro_invitaciones, foreignKey: "uid", otherKey: "did" });
-  
-  
-  
-  tarjeta.belongsTo(columna, { as: "cid_columna", foreignKey: "cid"});
-  columna.hasMany(tarjeta, { foreignKey: "cid"});
-  columna.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});
-  diagrama.hasMany(columna, { as: "columnas", foreignKey: "did"});
- 
-  mensaje.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});
-  diagrama.hasMany(mensaje, { as: "mensajes", foreignKey: "did"});
- 
-  participacion.belongsTo(diagrama, {foreignKey: "did"});
-  diagrama.hasMany(participacion, { as: "participacions", foreignKey: "did"});
- 
-  registro_invitaciones.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did"});
-  diagrama.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "did"});
-  registro_invitaciones.belongsTo(invitacion, { as: "iid_invitacion", foreignKey: "iid"});
-  invitacion.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "iid"});
-  invitacion.belongsTo(rol, { as: "rol_rol", foreignKey: "rol"});
-  rol.hasMany(invitacion, { as: "invitacions", foreignKey: "rol"});
-  participacion.belongsTo(rol, { foreignKey: "rnombre"});
-  rol.hasMany(participacion, { as: "participacions", foreignKey: "rnombre"});
-  participacion.belongsTo(usuarios, { as: "uid_usuario", foreignKey: "uid"});
-  usuarios.hasMany(participacion, { as: "participacions", foreignKey: "uid"});
-  registro_invitaciones.belongsTo(usuarios, { as: "uid_usuario", foreignKey: "uid"});
-  usuarios.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "uid"});
+
+
+
+  tarjeta.belongsTo(columna, { as: "cid_columna", foreignKey: "cid" });
+  columna.hasMany(tarjeta, { foreignKey: "cid" });
+  columna.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did" });
+
+  usuarios.hasMany(tarjeta, { foreignKey: 'creador', as: 'tarjetas' });
+
+
+  tarjeta.belongsTo(usuarios, { foreignKey: 'creador', as: 'Creador' });
+
+
+
+  diagrama.hasMany(columna, { as: "columnas", foreignKey: "did" });
+
+  mensaje.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did" });
+  diagrama.hasMany(mensaje, { as: "mensajes", foreignKey: "did" });
+
+  participacion.belongsTo(diagrama, { foreignKey: "did" });
+  diagrama.hasMany(participacion, { as: "participacions", foreignKey: "did" });
+
+  registro_invitaciones.belongsTo(diagrama, { as: "did_diagrama", foreignKey: "did" });
+  diagrama.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "did" });
+  registro_invitaciones.belongsTo(invitacion, { as: "iid_invitacion", foreignKey: "iid" });
+  invitacion.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "iid" });
+  invitacion.belongsTo(rol, { as: "rol_rol", foreignKey: "rol" });
+  rol.hasMany(invitacion, { as: "invitacions", foreignKey: "rol" });
+  participacion.belongsTo(rol, { foreignKey: "rnombre" });
+  rol.hasMany(participacion, { as: "participacions", foreignKey: "rnombre" });
+  participacion.belongsTo(usuarios, { as: "uid_usuario", foreignKey: "uid" });
+  usuarios.hasMany(participacion, { as: "participacions", foreignKey: "uid" });
+  registro_invitaciones.belongsTo(usuarios, { as: "uid_usuario", foreignKey: "uid" });
+  usuarios.hasMany(registro_invitaciones, { as: "registro_invitaciones", foreignKey: "uid" });
 
   return {
     columna,
